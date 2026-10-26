@@ -1,0 +1,40 @@
+&pinctrl {
+    pwm_pin0:pwm_pin0{
+        group1 {
+            pinmux = <PWM_0B_P17>;
+        };
+        group2 {
+            pinmux = <PWM_0A_P16>;
+        };
+        group3 {
+            pinmux = <PWM_1A_P18>;
+        };
+    };
+};
+
+&pwm {
+    status="okay";
+    pinctrl-0 = <&pwm_pin0>;
+    pinctrl-names = "default";
+    divider-int-3 = <125>;
+};
+
+/ {
+    pwmled {
+        compatible = "pwm-leds";
+        gled:gled{
+            pwms = <&pwm 1 PWM_HZ(1000) PWM_POLARITY_NORMAL>;
+            label = "PWM LED GREEN";
+        };
+
+        bled: bled{
+            pwms = <&pwm 0 PWM_HZ(1000) PWM_POLARITY_NORMAL>;
+            label = "PWM BLUE LED";
+        };
+
+        rled:rled {
+            pwms = <&pwm 2 PWM_HZ(1000) PWM_POLARITY_NORMAL>;
+            label = "PWM RED LED";
+        };
+    };
+};
